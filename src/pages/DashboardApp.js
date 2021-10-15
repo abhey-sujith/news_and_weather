@@ -1,23 +1,12 @@
 // material
-import faker from 'faker';
-import Masonry from 'react-masonry-css';
 import { Container } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useRef, useCallback } from 'react';
+import Masonry from 'react-masonry-css';
 // components
 import Page from '../components/Page';
-import { mockImgCover } from '../utils/mockImages';
 import { NewsItem } from '../components/_dashboard/app';
-// ----------------------------------------------------------------------
-
-const NEWS = [...Array(50)].map((_, index) => {
-  const setIndex = index + 1;
-  return {
-    title: faker.name.title(),
-    description: faker.lorem.paragraphs(),
-    image: mockImgCover(setIndex),
-    postedAt: faker.date.soon(),
-    index
-  };
-});
+import { getNewsDataAsync, setPageNumber } from '../features/slice/appSlice';
 
 const breakpointColumnsObj = {
   default: 4,
@@ -27,6 +16,43 @@ const breakpointColumnsObj = {
   600: 1
 };
 export default function DashboardApp() {
+  const NEWS = useSelector((state) => state.appdata.news);
+  const pageNumber = useSelector((state) => state.appdata.pageno);
+  const totalArticles = useSelector((state) => state.appdata.totalArticles);
+  const error = useSelector((state) => state.appdata.error);
+  const status = useSelector((state) => state.appdata.status);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (NEWS && NEWS.length === 0) {
+      dispatch(setPageNumber({ pageno: 1 }));
+      dispatch(getNewsDataAsync());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (pageNumber > 1) {
+      dispatch(getNewsDataAsync());
+    }
+  }, [pageNumber]);
+
+  const observer = useRef();
+
+  const lastBookElementRef = useCallback(
+    (node) => {
+      if (status === 'loading') return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && totalArticles > NEWS?.length) {
+          dispatch(setPageNumber({ pageno: pageNumber + 1 }));
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [status, totalArticles > NEWS?.length]
+  );
+
   return (
     <Page title="Dashboard | Minimal-UI">
       <Container maxWidth="xl">
@@ -35,11 +61,29 @@ export default function DashboardApp() {
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
         >
-          {NEWS.map((news) => (
-            <div key={news.index}>
+          {/* {NEWS.map((news) => (
+            <div key={news.title}>
               <NewsItem news={news} />
             </div>
-          ))}
+          ))} */}
+          {NEWS?.length > 0
+            ? NEWS.map((news, index) => {
+                if (NEWS.length === index + 1) {
+                  return (
+                    <div ref={lastBookElementRef} key={news.title}>
+                      <NewsItem news={news} />
+                    </div>
+                  );
+                }
+                return (
+                  <div key={news.title}>
+                    <NewsItem news={news} />
+                  </div>
+                );
+              })
+            : null}
+          <div>{status === 'loading' && 'Loading...'}</div>
+          <div>{error && 'Error'}</div>
         </Masonry>
       </Container>
     </Page>

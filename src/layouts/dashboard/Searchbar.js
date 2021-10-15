@@ -12,6 +12,13 @@ import {
   ClickAwayListener,
   IconButton
 } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  getNewsDataAsync,
+  setPageNumber,
+  setQuery,
+  resetVariables
+} from '../../features/slice/appSlice';
 
 // ----------------------------------------------------------------------
 
@@ -42,13 +49,18 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
 
 export default function Searchbar() {
   const [isOpen, setOpen] = useState(false);
+  const [inputvalue, setInputvalue] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleOpen = () => {
     setOpen((prev) => !prev);
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
     setOpen(false);
+    dispatch(setQuery({ value: inputvalue }));
+    dispatch(getNewsDataAsync());
   };
 
   return (
@@ -77,6 +89,9 @@ export default function Searchbar() {
                 </InputAdornment>
               }
               sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
+              onChange={(e) => {
+                setInputvalue(e.target.value);
+              }}
             />
             <Button variant="contained" onClick={handleClose}>
               Search

@@ -1,41 +1,44 @@
-import faker from 'faker';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+
 // material
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@mui/material';
-// utils
-import { mockImgCover } from '../../../utils/mockImages';
-
-// ----------------------------------------------------------------------
-
-const NEWS = [...Array(5)].map((_, index) => {
-  const setIndex = index + 1;
-  return {
-    title: faker.name.title(),
-    description: faker.lorem.paragraphs(),
-    image: mockImgCover(setIndex),
-    postedAt: faker.date.soon(),
-    index
-  };
-});
-
-// ----------------------------------------------------------------------
 
 NewsItem.propTypes = {
   news: PropTypes.object.isRequired
 };
 
 export default function NewsItem({ news }) {
-  const { image, title, description, postedAt, index } = news;
-
+  const { image, title, description, publishedAt } = news;
+  console.log('------in appnewsupdate', news);
+  const [Error, setError] = useState(false);
+  console.log('---------error', Error);
   return (
-    <Card key={index} sx={{ minWidth: 250 }}>
-      <CardMedia component="img" height="140" image={image} alt={title} />
+    <Card sx={{ minWidth: 250 }}>
+      {Error ? (
+        <CardMedia
+          component="img"
+          height="140"
+          image={`/static/mock-images/covers/cover_${Math.floor(Math.random() * 22)}.jpg`}
+          alt={title}
+        />
+      ) : (
+        <CardMedia
+          component="img"
+          height="140"
+          image={image}
+          alt={title}
+          onError={() => {
+            setError(true);
+          }}
+        />
+      )}
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {description.slice(0, 400) + (description.length > 60 ? '...' : '')}
+          {description}
         </Typography>
       </CardContent>
       <CardActions>
