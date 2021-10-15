@@ -1,5 +1,6 @@
 // material
 import { Container } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useRef, useCallback } from 'react';
 import Masonry from 'react-masonry-css';
@@ -82,9 +83,11 @@ export default function DashboardApp() {
                 );
               })
             : null}
-          <div>{status === 'loading' && 'Loading...'}</div>
-          <div>{error && 'Error'}</div>
         </Masonry>
+        <div>
+          {status === 'loading' && <Skeleton variant="rectangular" width={210} height={118} />}
+        </div>
+        <div>{error && 'Error'}</div>
       </Container>
     </Page>
   );

@@ -34,6 +34,24 @@ export const appSlice = createSlice({
       state.totalArticles = 0;
       state.news = [];
       console.log(state.pageno, '-------reset pageno');
+    },
+    setCountry: (state, { payload }) => {
+      const { value } = payload;
+      state.pageno = 1;
+      state.error = '';
+      state.totalArticles = 0;
+      state.news = [];
+      console.log(value, '-------setCountry value');
+      state.country = value;
+    },
+    setLanguage: (state, { payload }) => {
+      const { value } = payload;
+      state.pageno = 1;
+      state.error = '';
+      state.totalArticles = 0;
+      state.news = [];
+      console.log(value, '-------setLanguage value');
+      state.language = value;
     }
   },
   extraReducers: (builder) => {
@@ -42,6 +60,7 @@ export const appSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(getNewsDataAsync.rejected, (state, action) => {
+        state.status = 'idle';
         state.error = action.error;
       })
       .addCase(getNewsDataAsync.fulfilled, (state, action) => {
@@ -54,7 +73,8 @@ export const appSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setPageNumber, setQuery, resetVariables } = appSlice.actions;
+export const { setPageNumber, setQuery, resetVariables, setCountry, setLanguage } =
+  appSlice.actions;
 export { getNewsDataAsync };
 
 export default appSlice.reducer;

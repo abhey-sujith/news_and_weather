@@ -63,8 +63,12 @@ export default function Searchbar() {
     dispatch(getNewsDataAsync());
   };
 
+  const handleCloseBar = async () => {
+    setOpen(false);
+  };
+
   return (
-    <ClickAwayListener onClickAway={handleClose}>
+    <ClickAwayListener onClickAway={handleCloseBar}>
       <div>
         {!isOpen && (
           <IconButton onClick={handleOpen}>

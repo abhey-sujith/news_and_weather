@@ -9,8 +9,8 @@ import { MHidden } from '../../components/@material-extend';
 //
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
-import LanguagePopover from './LanguagePopover';
-
+import CountrySelect from './CountrySelect';
+import LanguageSelect from './LanguageSelect';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -45,17 +45,12 @@ export default function DashboardNavbar() {
   return (
     <RootStyle>
       <ToolbarStyle>
-        <MHidden width="lgUp">
-          <IconButton sx={{ mr: 1, color: 'text.primary' }}>
-            <Icon icon={menu2Fill} />
-          </IconButton>
-        </MHidden>
-
         <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <LanguagePopover />
+          <CountrySelect />
+          <LanguageSelect />
           <AccountPopover />
         </Stack>
       </ToolbarStyle>
