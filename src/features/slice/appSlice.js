@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getNewsDataAsync } from '../thunk/thunk';
+import { getNewsDataAsync, getWeatherDataAsync } from '../thunk/thunk';
 
 export const appSlice = createSlice({
   name: 'app',
@@ -7,11 +7,18 @@ export const appSlice = createSlice({
     news: [],
     totalArticles: 0,
     error: '',
+    weatherError: '',
     pageno: 1,
     query: 'education',
     language: 'en',
     country: 'in',
-    status: 'idle'
+    status: 'idle',
+    weatherStatus: 'idle',
+    lat: undefined,
+    lon: undefined,
+    weatherDescription: '',
+    temperature: null,
+    location: ''
   },
   reducers: {
     setPageNumber: (state, { payload }) => {
@@ -33,6 +40,10 @@ export const appSlice = createSlice({
       state.error = '';
       state.totalArticles = 0;
       state.news = [];
+      state.query = 'education';
+      state.language = 'en';
+      state.country = 'in';
+      state.status = 'idle';
       console.log(state.pageno, '-------reset pageno');
     },
     setCountry: (state, { payload }) => {
@@ -52,6 +63,15 @@ export const appSlice = createSlice({
       state.news = [];
       console.log(value, '-------setLanguage value');
       state.language = value;
+    },
+    setLatLon: (state, { payload }) => {
+      const { latitude, longitude } = payload;
+      console.log(state.lat, '-----------payload lat lon', state.lon);
+      if (latitude && longitude) {
+        state.lat = latitude;
+        state.lon = longitude;
+        console.log(state.lat, '-----------lon', state.lon);
+      }
     }
   },
   extraReducers: (builder) => {
@@ -68,13 +88,28 @@ export const appSlice = createSlice({
         console.log('payload-----------', action.payload.articles);
         state.totalArticles = action.payload.totalArticles;
         state.news = [...state.news, ...action.payload.articles];
+      })
+      .addCase(getWeatherDataAsync.pending, (state) => {
+        state.weatherStatus = 'loading';
+      })
+      .addCase(getWeatherDataAsync.rejected, (state, action) => {
+        state.status = 'idle';
+        state.weatherError = action.error;
+      })
+      .addCase(getWeatherDataAsync.fulfilled, (state, action) => {
+        state.weatherStatus = 'idle';
+        console.log('payload-----------', action.payload);
+        state.location = action.payload.name;
+        state.temperature = action.payload.main.temp;
+        state.weatherDescription = action.payload.weather[0].description;
+        console.log(state.location, state.temperature, state.weatherDescription, '--------data');
       });
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { setPageNumber, setQuery, resetVariables, setCountry, setLanguage } =
+export const { setPageNumber, setQuery, resetVariables, setCountry, setLanguage, setLatLon } =
   appSlice.actions;
-export { getNewsDataAsync };
+export { getNewsDataAsync, getWeatherDataAsync };
 
 export default appSlice.reducer;

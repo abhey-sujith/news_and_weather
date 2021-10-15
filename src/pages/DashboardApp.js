@@ -1,13 +1,22 @@
+import * as React from 'react';
 // material
 import { Container } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useRef, useCallback } from 'react';
 import Masonry from 'react-masonry-css';
+import MuiAlert from '@mui/material/Alert';
+import { useCurrentPosition } from 'react-use-geolocation';
 // components
 import Page from '../components/Page';
-import { NewsItem } from '../components/_dashboard/app';
-import { getNewsDataAsync, setPageNumber } from '../features/slice/appSlice';
+import { NewsItem, weatherCard } from '../components/_dashboard/app';
+import {
+  getNewsDataAsync,
+  setPageNumber,
+  resetVariables,
+  getWeatherDataAsync,
+  setLatLon
+} from '../features/slice/appSlice';
 
 const breakpointColumnsObj = {
   default: 4,
@@ -16,16 +25,33 @@ const breakpointColumnsObj = {
   900: 2,
   600: 1
 };
+
+const Alert = React.forwardRef((props, ref) => (
+  <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+));
+
 export default function DashboardApp() {
   const NEWS = useSelector((state) => state.appdata.news);
   const pageNumber = useSelector((state) => state.appdata.pageno);
   const totalArticles = useSelector((state) => state.appdata.totalArticles);
   const error = useSelector((state) => state.appdata.error);
   const status = useSelector((state) => state.appdata.status);
-
+  const location = useSelector((state) => state.appdata.location);
+  const temperature = useSelector((state) => state.appdata.temperature);
+  const weatherDescription = useSelector((state) => state.appdata.weatherDescription);
+  const [position, error_] = useCurrentPosition();
+  console.log('position----------', position, '----err', error_);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(resetVariables());
+    if (position) {
+      dispatch(
+        setLatLon({ latitude: position.coords.latitude, longitude: position.coords.longitude })
+      );
+
+      dispatch(getWeatherDataAsync());
+    }
     if (NEWS && NEWS.length === 0) {
       dispatch(setPageNumber({ pageno: 1 }));
       dispatch(getNewsDataAsync());
@@ -37,6 +63,16 @@ export default function DashboardApp() {
       dispatch(getNewsDataAsync());
     }
   }, [pageNumber]);
+
+  useEffect(() => {
+    if (position) {
+      console.log('innnn', position.coords.latitude);
+      dispatch(
+        setLatLon({ latitude: position.coords.latitude, longitude: position.coords.longitude })
+      );
+      dispatch(getWeatherDataAsync());
+    }
+  }, [position]);
 
   const observer = useRef();
 
@@ -67,6 +103,9 @@ export default function DashboardApp() {
               <NewsItem news={news} />
             </div>
           ))} */}
+          {location && temperature && weatherDescription
+            ? weatherCard({ location, temperature, weatherDescription })
+            : null}
           {NEWS?.length > 0
             ? NEWS.map((news, index) => {
                 if (NEWS.length === index + 1) {
@@ -83,11 +122,11 @@ export default function DashboardApp() {
                 );
               })
             : null}
+          <div>
+            {status === 'loading' && <Skeleton variant="rectangular" width={250} height={140} />}
+          </div>
         </Masonry>
-        <div>
-          {status === 'loading' && <Skeleton variant="rectangular" width={210} height={118} />}
-        </div>
-        <div>{error && 'Error'}</div>
+        <div>{error && <Alert severity="error">Could not fetch Data</Alert>}</div>
       </Container>
     </Page>
   );

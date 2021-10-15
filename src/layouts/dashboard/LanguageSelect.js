@@ -130,6 +130,7 @@ export default function LanguageSelect() {
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">English</InputLabel>
           <Select
+            key={value}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={value}
@@ -137,7 +138,9 @@ export default function LanguageSelect() {
             onChange={handleChange}
           >
             {LANG.map((option) => (
-              <MenuItem value={option.value}>{option.label}</MenuItem>
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>

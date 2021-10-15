@@ -162,6 +162,7 @@ export default function CountrySelect() {
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">India</InputLabel>
           <Select
+            key={value}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={value}
@@ -169,7 +170,9 @@ export default function CountrySelect() {
             onChange={handleChange}
           >
             {COUNTRY.map((option) => (
-              <MenuItem value={option.value}>{option.label}</MenuItem>
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
