@@ -10,21 +10,20 @@ import { MHidden } from '../../components/@material-extend';
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
-import NotificationsPopover from './NotificationsPopover';
 
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
 const APPBAR_MOBILE = 64;
-const APPBAR_DESKTOP = 92;
+const APPBAR_DESKTOP = 64;
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
-  boxShadow: 'none',
+  boxShadow: '-moz-initial',
   backdropFilter: 'blur(6px)',
   WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
   backgroundColor: alpha(theme.palette.background.default, 0.72),
   [theme.breakpoints.up('lg')]: {
-    width: `calc(100% - ${DRAWER_WIDTH + 1}px)`
+    width: `calc(100%px)`
   }
 }));
 
@@ -38,16 +37,16 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-DashboardNavbar.propTypes = {
-  onOpenSidebar: PropTypes.func
-};
+// DashboardNavbar.propTypes = {
+//   onOpenSidebar: PropTypes.func
+// };
 
-export default function DashboardNavbar({ onOpenSidebar }) {
+export default function DashboardNavbar() {
   return (
     <RootStyle>
       <ToolbarStyle>
         <MHidden width="lgUp">
-          <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
+          <IconButton sx={{ mr: 1, color: 'text.primary' }}>
             <Icon icon={menu2Fill} />
           </IconButton>
         </MHidden>
@@ -57,7 +56,6 @@ export default function DashboardNavbar({ onOpenSidebar }) {
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
           <LanguagePopover />
-          <NotificationsPopover />
           <AccountPopover />
         </Stack>
       </ToolbarStyle>

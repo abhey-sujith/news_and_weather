@@ -1,77 +1,46 @@
 // material
-import { Box, Grid, Container, Typography } from '@mui/material';
+import faker from 'faker';
+import Masonry from 'react-masonry-css';
+import { Container } from '@mui/material';
 // components
 import Page from '../components/Page';
-import {
-  AppTasks,
-  AppNewUsers,
-  AppBugReports,
-  AppItemOrders,
-  AppNewsUpdate,
-  AppWeeklySales,
-  AppOrderTimeline,
-  AppCurrentVisits,
-  AppWebsiteVisits,
-  AppTrafficBySite,
-  AppCurrentSubject,
-  AppConversionRates
-} from '../components/_dashboard/app';
-
+import { mockImgCover } from '../utils/mockImages';
+import { NewsItem } from '../components/_dashboard/app';
 // ----------------------------------------------------------------------
 
+const NEWS = [...Array(50)].map((_, index) => {
+  const setIndex = index + 1;
+  return {
+    title: faker.name.title(),
+    description: faker.lorem.paragraphs(),
+    image: mockImgCover(setIndex),
+    postedAt: faker.date.soon(),
+    index
+  };
+});
+
+const breakpointColumnsObj = {
+  default: 4,
+  1536: 4,
+  1200: 3,
+  900: 2,
+  600: 1
+};
 export default function DashboardApp() {
   return (
     <Page title="Dashboard | Minimal-UI">
       <Container maxWidth="xl">
-        <Box sx={{ pb: 5 }}>
-          <Typography variant="h4">Hi, Welcome back</Typography>
-        </Box>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWeeklySales />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppNewUsers />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppItemOrders />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppBugReports />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentVisits />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppNewsUpdate />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppOrderTimeline />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTrafficBySite />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppTasks />
-          </Grid>
-        </Grid>
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
+          {NEWS.map((news) => (
+            <div key={news.index}>
+              <NewsItem news={news} />
+            </div>
+          ))}
+        </Masonry>
       </Container>
     </Page>
   );
