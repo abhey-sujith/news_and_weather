@@ -1,11 +1,6 @@
-import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
-// components
-import { MHidden } from '../../components/@material-extend';
+import { Box, Stack, AppBar, Toolbar } from '@mui/material';
 //
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
@@ -13,7 +8,6 @@ import CountrySelect from './CountrySelect';
 import LanguageSelect from './LanguageSelect';
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH = 280;
 const APPBAR_MOBILE = 64;
 const APPBAR_DESKTOP = 64;
 
@@ -36,10 +30,6 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
-// DashboardNavbar.propTypes = {
-//   onOpenSidebar: PropTypes.func
-// };
 
 export default function DashboardNavbar() {
   return (

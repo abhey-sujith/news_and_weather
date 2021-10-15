@@ -20,8 +20,6 @@ export const getNewsDataAsync = createAsyncThunk(
       });
       return response.data;
     } catch (err) {
-      // Use `err.response.data` as `action.payload` for a `rejected` action,
-      // by explicitly returning it using the `rejectWithValue()` utility
       if (err && err.response && err.response.data) {
         return rejectWithValue(err.response.data);
       }
@@ -48,8 +46,6 @@ export const getWeatherDataAsync = createAsyncThunk(
       });
       return response.data;
     } catch (err) {
-      // Use `err.response.data` as `action.payload` for a `rejected` action,
-      // by explicitly returning it using the `rejectWithValue()` utility
       if (err && err.response && err.response.data) {
         return rejectWithValue(err.response.data);
       }

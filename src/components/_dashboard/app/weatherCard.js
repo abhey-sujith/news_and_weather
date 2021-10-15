@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 
 // material
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 
 weatherCard.propTypes = {
   location: PropTypes.object.isRequired,

@@ -1,20 +1,8 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 // material
-import { alpha } from '@mui/material/styles';
-import {
-  Box,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-  IconButton,
-  InputLabel,
-  FormControl,
-  Select
-} from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
+import { Box, MenuItem, InputLabel, FormControl, Select } from '@mui/material';
+import { useDispatch } from 'react-redux';
 import { getNewsDataAsync, setCountry } from '../../features/slice/appSlice';
-// components
-import MenuPopover from '../../components/MenuPopover';
 
 // ----------------------------------------------------------------------
 

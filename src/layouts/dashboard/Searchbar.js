@@ -12,13 +12,8 @@ import {
   ClickAwayListener,
   IconButton
 } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  getNewsDataAsync,
-  setPageNumber,
-  setQuery,
-  resetVariables
-} from '../../features/slice/appSlice';
+import { useDispatch } from 'react-redux';
+import { getNewsDataAsync, setQuery } from '../../features/slice/appSlice';
 
 // ----------------------------------------------------------------------
 
