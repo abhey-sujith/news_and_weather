@@ -13,13 +13,19 @@ weatherCard.propTypes = {
 export default function weatherCard({ location, temperature, weatherDescription }) {
   console.log('------in weatherDescription', location, temperature, weatherDescription);
   return (
-    <Card sx={{ minWidth: 250 }}>
+    <Card
+      sx={{
+        minWidth: 250,
+        backgroundColor: '#70c6f9'
+      }}
+    >
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {location}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {temperature}
+          {(Number(temperature) - 273.15).toFixed(2)}
+          {' °C'}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {weatherDescription}

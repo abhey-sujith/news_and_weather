@@ -98,11 +98,6 @@ export default function DashboardApp() {
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
         >
-          {/* {NEWS.map((news) => (
-            <div key={news.title}>
-              <NewsItem news={news} />
-            </div>
-          ))} */}
           {location && temperature && weatherDescription
             ? weatherCard({ location, temperature, weatherDescription })
             : null}

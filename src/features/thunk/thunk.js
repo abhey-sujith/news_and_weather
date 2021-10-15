@@ -13,7 +13,7 @@ export const getNewsDataAsync = createAsyncThunk(
         params: {
           q: query,
           page: pageno,
-          token: '3eb4cdc4279cda784cacc8f52c5fea58',
+          token: process.env.REACT_APP_NEWS_API_TOKEN,
           lang: language,
           country
         }
@@ -34,6 +34,7 @@ export const getWeatherDataAsync = createAsyncThunk(
   'api/getWeatherData',
   async (_, { getState, rejectWithValue }) => {
     try {
+      // const res = await axios.get('https://geolocation-db.com/json/')
       const { lat, lon } = getState().appdata;
       console.log(lat, lon, 'lat, lon');
       const response = await axios({
@@ -42,7 +43,7 @@ export const getWeatherDataAsync = createAsyncThunk(
         params: {
           lat,
           lon,
-          appid: '7090e58dc3e20ab56ccdd81f3dbfe806'
+          appid: process.env.REACT_APP_WEATHER_API_TOKEN
         }
       });
       return response.data;
