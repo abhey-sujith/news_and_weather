@@ -1,8 +1,18 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import { formatDistance, format } from 'date-fns';
 // material
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@mui/material';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+  IconButton
+} from '@mui/material';
 
 NewsItem.propTypes = {
   news: PropTypes.object.isRequired
@@ -41,9 +51,18 @@ export default function NewsItem({ news }) {
           {description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+      <CardActions sx={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
+        </CardActions>
+        <Typography variant="caption" sx={{ pr: 3, flexShrink: 0, color: 'text.secondary' }}>
+          {publishedAt.substring(0, 10)}
+        </Typography>
       </CardActions>
     </Card>
     // <Stack direction="row" alignItems="center" spacing={2}>
