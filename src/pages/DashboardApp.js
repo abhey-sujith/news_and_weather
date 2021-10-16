@@ -142,7 +142,7 @@ export default function DashboardApp() {
                 );
               })
             : null}
-          {status !== 'loading' && NEWS?.length === 0 ? (
+          {status !== 'loading' && !error && NEWS?.length === 0 ? (
             <Alert severity="info">
               No news available for this particular combination of request
             </Alert>
