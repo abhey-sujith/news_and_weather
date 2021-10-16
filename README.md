@@ -40,7 +40,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
- <img src="./overview.png" width="600">
+ <img src="./images/overview.png" width="600">
  
 A simple project which fetches data from Weather and News APIs.
 
@@ -55,15 +55,15 @@ A simple project which fetches data from Weather and News APIs.
 
 ### Wire Frame
 
-  <img src="./website_wireframe.png" width="600">
-  <img src="./ipad_wireframe.png" width="300">
-  <img src="./mobile_wireframe.png" width="100">
+  <img src="./images/website_wireframe.png" width="600">
+  <img src="./images/ipad_wireframe.png" width="300">
+  <img src="./images/mobile_wireframe.png" width="100">
   
 ### Final Product
 
-  <img src="./website_final.png" width="600">
-  <img src="./ipad_final.png" width="300">
-  <img src="./mobile_final.png" width="100">
+  <img src="./images/website_final.png" width="600">
+  <img src="./images/ipad_final.png" width="300">
+  <img src="./images/mobile_final.png" width="100">
 
 
 <!-- GETTING STARTED -->
