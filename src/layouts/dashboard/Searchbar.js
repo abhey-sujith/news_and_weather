@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react';
-import { useState } from 'react';
 import searchFill from '@iconify/icons-eva/search-fill';
 // material
 import { styled, alpha } from '@mui/material/styles';
@@ -12,7 +11,11 @@ import {
   ClickAwayListener,
   IconButton
 } from '@mui/material';
+
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
+// components
 import { getNewsDataAsync, setQuery } from '../../features/slice/appSlice';
 
 // ----------------------------------------------------------------------

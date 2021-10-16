@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-//
+// components
 import DashboardNavbar from './DashboardNavbar';
 
 // ----------------------------------------------------------------------

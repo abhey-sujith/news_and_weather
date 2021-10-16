@@ -1,14 +1,18 @@
 import * as React from 'react';
-// material
-import { Container, Snackbar, Skeleton } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useRef, useCallback } from 'react';
 import Masonry from 'react-masonry-css';
-import MuiAlert from '@mui/material/Alert';
 import { useCurrentPosition } from 'react-use-geolocation';
+
+// material
+import { Container, Snackbar, Skeleton } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
+
 // components
 import Page from '../components/Page';
 import { NewsItem, weatherCard } from '../components/_dashboard/app';
+
+// redux actions
 import {
   getNewsDataAsync,
   setPageNumber,
@@ -38,12 +42,20 @@ export default function DashboardApp() {
   const location = useSelector((state) => state.appdata.location);
   const temperature = useSelector((state) => state.appdata.temperature);
   const weatherDescription = useSelector((state) => state.appdata.weatherDescription);
+
+  // get coordinates by using location
   const [position, browserLatlonGetError] = useCurrentPosition();
+
   const [open, setOpen] = React.useState(true);
+
   const dispatch = useDispatch();
 
+  // on page load useEffect runs once
   useEffect(() => {
+    // reset initial variables
     dispatch(resetVariables());
+
+    // set coordinates in redux and get weather data
     if (position) {
       dispatch(
         setLatLon({ latitude: position.coords.latitude, longitude: position.coords.longitude })
@@ -51,18 +63,22 @@ export default function DashboardApp() {
 
       dispatch(getWeatherDataAsync());
     }
+
+    // if NEWS is empty fetch news
     if (NEWS && NEWS.length === 0) {
       dispatch(setPageNumber({ pageno: 1 }));
       dispatch(getNewsDataAsync());
     }
   }, []);
 
+  // if pagenumber changes get new news --pagination
   useEffect(() => {
     if (pageNumber > 1) {
       dispatch(getNewsDataAsync());
     }
   }, [pageNumber]);
 
+  // if location permission is changed then this useEffect is executed
   useEffect(() => {
     if (position) {
       dispatch(
@@ -72,6 +88,8 @@ export default function DashboardApp() {
     }
   }, [position]);
 
+  // ----------------------------------------------------------------------
+  // ----used for pagination (to get last index)
   const observer = useRef();
 
   const lastBookElementRef = useCallback(
@@ -88,6 +106,7 @@ export default function DashboardApp() {
     [status, totalArticles > NEWS?.length]
   );
 
+  // to close snackbar
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
