@@ -21,6 +21,7 @@ import {
   setLatLon
 } from '../features/slice/appSlice';
 
+// breakpoints for masonry 
 const breakpointColumnsObj = {
   default: 4,
   1536: 4,
