@@ -20,6 +20,9 @@
       <ul>
         <li><a href="#final-product">Final Product</a></li>
       </ul>
+      <ul>
+        <li><a href="#file-structure">File Structure</a></li>
+      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -64,7 +67,44 @@ A simple project which fetches data from Weather and News APIs.
   <img src="./images/website_final.png" width="600">
   <img src="./images/ipad_final.png" width="300">
   <img src="./images/mobile_final.png" width="100">
+  
+### File Structure
+  
+  Top Level Files
+  
+    .
+    ├── images                  # stores images for readme
+    ├── public                  # public files folder  
+    ├── src                     # Source files
+    ├── LICENSE
+    ├── package.json
+    └── README.md
 
+   Src Folder
+
+    ├── ...
+    ├── src                    
+    │   ├── app
+    │   │   └── store.js.                     # Redux store
+    │   ├── features                          # Redux Slices
+    │   │   ├── appSlice.js   
+    │   │   └── thunk.js                      # Redux thunk (api calls are made here)
+    │   ├── components/_dashboard/app/        # Card Components
+    │   │   ├── AppNewsUpdate.js.    
+    │   │   ├── weatherCard.js
+    │   │   └── index.js
+    │   ├── layouts/dashboard                 # DashBoard Components
+    │   │   ├── AccountPopover.js    
+    │   │   ├── CountrySelect.js
+    │   │   ├── DashboardNavbar.js
+    │   │   ├── LanguageSelect.js
+    │   │   ├── Searchbar.js
+    │   │   └── index.js          
+    │   ├── pages                             # There are two pages in the app Dashboard and 404
+    │   │   ├── DashboardApp.js  
+    │   │   └── Page404.js         
+    │   └── ...                 
+    └── ...
 
 <!-- GETTING STARTED -->
 ## Getting Started
