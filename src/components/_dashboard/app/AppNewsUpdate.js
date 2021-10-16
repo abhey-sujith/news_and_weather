@@ -3,14 +3,7 @@ import { useState } from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 // material
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-  IconButton
-} from '@mui/material';
+import { Card, CardActions, CardContent, CardMedia, Typography, IconButton } from '@mui/material';
 
 NewsItem.propTypes = {
   news: PropTypes.object.isRequired
