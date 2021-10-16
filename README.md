@@ -133,7 +133,7 @@ To get a local copy up and running follow these simple steps.
    
    Localhost url :- [http://localhost:3000/dashboard/app](http://localhost:3000/dashboard/app)
    
-   Example api after deploying :- [TODO](TODO)
+   Example api after deploying :- [https://quiet-lowlands-32656.herokuapp.com/dashboard/app](https://quiet-lowlands-32656.herokuapp.com/dashboard/app)
 
 <!-- ROADMAP -->
 ## Roadmap
