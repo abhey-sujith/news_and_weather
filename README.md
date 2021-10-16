@@ -50,6 +50,8 @@ A simple project which fetches data from Weather and News APIs.
 * [React](https://reactjs.org/)
 * [Redux](https://redux.js.org/)
 * [mui](https://mui.com/)
+* [gnews.io](https://gnews.io/)
+* [openweathermap.org](https://openweathermap.org/)
 
 ### Wire Frame
 
