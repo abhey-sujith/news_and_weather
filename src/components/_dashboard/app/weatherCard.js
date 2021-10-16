@@ -10,7 +10,6 @@ weatherCard.propTypes = {
 };
 
 export default function weatherCard({ location, temperature, weatherDescription }) {
-  console.log('------in weatherDescription', location, temperature, weatherDescription);
   return (
     <Card
       sx={{

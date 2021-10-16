@@ -52,7 +52,7 @@ const LANG = [
     label: 'Malayalam'
   },
   {
-    value: 'ml',
+    value: 'mr',
     label: 'Marathi'
   },
   {
@@ -105,7 +105,6 @@ export default function LanguageSelect() {
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    console.log(e.target);
     setValue(e.target.value);
 
     dispatch(setLanguage({ value: e.target.value }));

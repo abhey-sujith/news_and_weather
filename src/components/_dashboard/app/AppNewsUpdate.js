@@ -19,9 +19,7 @@ NewsItem.propTypes = {
 
 export default function NewsItem({ news }) {
   const { image, title, description, publishedAt } = news;
-  console.log('------in appnewsupdate', news);
   const [Error, setError] = useState(false);
-  console.log('---------error', Error);
   return (
     <Card sx={{ minWidth: 250 }}>
       {Error ? (

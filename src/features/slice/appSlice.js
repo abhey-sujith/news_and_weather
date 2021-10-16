@@ -9,7 +9,7 @@ export const appSlice = createSlice({
     error: '',
     weatherError: '',
     pageno: 1,
-    query: 'education',
+    query: 'breaking-news world nation business technology entertainment sports science health',
     language: 'en',
     country: 'in',
     status: 'idle',
@@ -23,7 +23,6 @@ export const appSlice = createSlice({
   reducers: {
     setPageNumber: (state, { payload }) => {
       const { pageno } = payload;
-      console.log(pageno, '-------in state pageno');
       state.pageno = pageno;
     },
     setQuery: (state, { payload }) => {
@@ -32,7 +31,6 @@ export const appSlice = createSlice({
       state.error = '';
       state.totalArticles = 0;
       state.news = [];
-      console.log(value, '-------query value');
       state.query = value;
     },
     resetVariables: (state) => {
@@ -44,7 +42,6 @@ export const appSlice = createSlice({
       state.language = 'en';
       state.country = 'in';
       state.status = 'idle';
-      console.log(state.pageno, '-------reset pageno');
     },
     setCountry: (state, { payload }) => {
       const { value } = payload;
@@ -52,7 +49,6 @@ export const appSlice = createSlice({
       state.error = '';
       state.totalArticles = 0;
       state.news = [];
-      console.log(value, '-------setCountry value');
       state.country = value;
     },
     setLanguage: (state, { payload }) => {
@@ -61,16 +57,13 @@ export const appSlice = createSlice({
       state.error = '';
       state.totalArticles = 0;
       state.news = [];
-      console.log(value, '-------setLanguage value');
       state.language = value;
     },
     setLatLon: (state, { payload }) => {
       const { latitude, longitude } = payload;
-      console.log(state.lat, '-----------payload lat lon', state.lon);
       if (latitude && longitude) {
         state.lat = latitude;
         state.lon = longitude;
-        console.log(state.lat, '-----------lon', state.lon);
       }
     }
   },
@@ -85,7 +78,6 @@ export const appSlice = createSlice({
       })
       .addCase(getNewsDataAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        console.log('payload-----------', action.payload.articles);
         state.totalArticles = action.payload.totalArticles;
         state.news = [...state.news, ...action.payload.articles];
       })
@@ -98,11 +90,9 @@ export const appSlice = createSlice({
       })
       .addCase(getWeatherDataAsync.fulfilled, (state, action) => {
         state.weatherStatus = 'idle';
-        console.log('payload-----------', action.payload);
         state.location = action.payload.name;
         state.temperature = action.payload.main.temp;
         state.weatherDescription = action.payload.weather[0].description;
-        console.log(state.location, state.temperature, state.weatherDescription, '--------data');
       });
   }
 });

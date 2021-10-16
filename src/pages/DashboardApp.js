@@ -1,7 +1,6 @@
 import * as React from 'react';
 // material
-import { Container } from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
+import { Container, Snackbar, Skeleton } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useRef, useCallback } from 'react';
 import Masonry from 'react-masonry-css';
@@ -39,8 +38,8 @@ export default function DashboardApp() {
   const location = useSelector((state) => state.appdata.location);
   const temperature = useSelector((state) => state.appdata.temperature);
   const weatherDescription = useSelector((state) => state.appdata.weatherDescription);
-  const [position, error_] = useCurrentPosition();
-  console.log('position----------', position, '----err', error_);
+  const [position, browserLatlonGetError] = useCurrentPosition();
+  const [open, setOpen] = React.useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -66,7 +65,6 @@ export default function DashboardApp() {
 
   useEffect(() => {
     if (position) {
-      console.log('innnn', position.coords.latitude);
       dispatch(
         setLatLon({ latitude: position.coords.latitude, longitude: position.coords.longitude })
       );
@@ -90,6 +88,14 @@ export default function DashboardApp() {
     [status, totalArticles > NEWS?.length]
   );
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <Page title="Dashboard | Minimal-UI">
       <Container maxWidth="xl">
@@ -105,23 +111,37 @@ export default function DashboardApp() {
             ? NEWS.map((news, index) => {
                 if (NEWS.length === index + 1) {
                   return (
-                    <div ref={lastBookElementRef} key={news.title}>
+                    <div ref={lastBookElementRef} key={news.index}>
                       <NewsItem news={news} />
                     </div>
                   );
                 }
                 return (
-                  <div key={news.title}>
+                  <div key={news.index}>
                     <NewsItem news={news} />
                   </div>
                 );
               })
             : null}
+          {status !== 'loading' && NEWS?.length === 0 ? (
+            <Alert severity="info">
+              No news available for this particular combination of request
+            </Alert>
+          ) : null}
           <div>
             {status === 'loading' && <Skeleton variant="rectangular" width={250} height={140} />}
           </div>
         </Masonry>
         <div>{error && <Alert severity="error">Could not fetch Data</Alert>}</div>
+        <div>
+          {browserLatlonGetError && (
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert severity="error" onClose={handleClose} sx={{ width: '100%' }}>
+                {browserLatlonGetError.message}
+              </Alert>
+            </Snackbar>
+          )}
+        </div>
       </Container>
     </Page>
   );

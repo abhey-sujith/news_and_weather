@@ -137,7 +137,6 @@ export default function CountrySelect() {
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    console.log(e.target);
     setValue(e.target.value);
 
     dispatch(setCountry({ value: e.target.value }));

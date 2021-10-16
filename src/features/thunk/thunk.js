@@ -6,7 +6,6 @@ export const getNewsDataAsync = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const { pageno, query, language, country } = getState().appdata;
-      console.log(pageno, '------------pgno');
       const response = await axios({
         method: 'GET',
         url: 'https://gnews.io/api/v4/search',
@@ -34,7 +33,6 @@ export const getWeatherDataAsync = createAsyncThunk(
     try {
       // const res = await axios.get('https://geolocation-db.com/json/')
       const { lat, lon } = getState().appdata;
-      console.log(lat, lon, 'lat, lon');
       const response = await axios({
         method: 'GET',
         url: 'https://api.openweathermap.org/data/2.5/weather',
