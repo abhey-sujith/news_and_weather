@@ -168,7 +168,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Abhey Sujith  - abheysujith@gmail.com
+Abhey Sujith  - abheysujit@gmail.com
 
 
 <!-- ACKNOWLEDGEMENTS -->
